@@ -35,4 +35,12 @@ public class Usuario {
     @Getter
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Prestamo> prestamos = new ArrayList<>();
+
+    public void addCuenta(Cuenta cuenta) {
+        cuentas.add(cuenta);
+    }
+
+    public void deleteCuenta(Cuenta cuenta) {
+        cuentas.remove(cuenta);
+    }
 }
