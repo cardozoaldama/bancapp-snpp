@@ -40,7 +40,7 @@ public class Usuario {
         cuentas.add(cuenta);
     }
 
-    public void deleteCuenta(Cuenta cuenta) {
+    public void removeCuenta(Cuenta cuenta) {
         cuentas.remove(cuenta);
     }
 
