@@ -1,0 +1,30 @@
+package com.intepy.bancapp.entities;
+
+import java.util.List;
+
+import com.intepy.bancapp.entities.enums.EstadoPrestamoDescripcion;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+public class EstadoPrestamo {
+
+    @Getter
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Getter
+    @Setter
+    private EstadoPrestamoDescripcion descripcion;
+
+    @Getter
+    @OneToMany(mappedBy = "estado")
+    private List<Prestamo> prestamos;
+}
