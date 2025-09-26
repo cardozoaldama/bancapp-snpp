@@ -43,4 +43,12 @@ public class Usuario {
     public void deleteCuenta(Cuenta cuenta) {
         cuentas.remove(cuenta);
     }
+
+    public void addPrestamo(Prestamo prestamo) {
+        prestamos.add(prestamo);
+    }
+
+    public void removePrestamo(Prestamo prestamo) {
+        prestamos.remove(prestamo);
+    }
 }
