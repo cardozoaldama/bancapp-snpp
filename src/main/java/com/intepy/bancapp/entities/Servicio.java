@@ -34,4 +34,11 @@ public class Servicio {
         this.nombre = nombre;
     }
 
+    void addPago(PagoServicio pago) {
+        pagos.add(pago);
+    }
+
+    void removePago(PagoServicio pago) {
+        pagos.remove(pago);
+    }
 }
