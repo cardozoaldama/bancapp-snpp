@@ -52,7 +52,8 @@ public class Servicio {
 
     @LastModifiedDate
     @Column(nullable = false) // No puede ser null, pero sí se actualiza
-    
+    @Getter
+    @Setter
     private LocalDateTime updatedAt;
 
     public Servicio(TipoServicio nombre) {
