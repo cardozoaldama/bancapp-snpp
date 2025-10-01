@@ -39,9 +39,7 @@ public class Deposito {
 
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "origen_id")
-    private OrigenDeposito origen;
+    private String descripcionOrigen;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -49,10 +47,10 @@ public class Deposito {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public Deposito(Double monto, Cuenta cuenta, OrigenDeposito origen) {
+    public Deposito(Double monto, Cuenta cuenta, String descripcionOrigen) {
         this.monto = monto;
         this.cuenta = cuenta;
-        this.origen = origen;
+        this.descripcionOrigen = descripcionOrigen;
     }
 
 }
