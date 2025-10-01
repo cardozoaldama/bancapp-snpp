@@ -34,4 +34,11 @@ public class Transferencia {
     @ManyToOne
     @JoinColumn(name = "cuenta_destino_id")
     private Cuenta cuentaDestino;
+
+    public Transferencia(Double monto, Cuenta cuentaOrigen, Cuenta cuentaDestino) {
+        this.monto = monto;
+        this.cuentaOrigen = cuentaOrigen;
+        this.cuentaDestino = cuentaDestino;
+    }
+
 }
