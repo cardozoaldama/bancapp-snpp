@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.intepy.bancapp.entities.Usuario;
+import com.intepy.bancapp.exceptions.EntityNotFoundException;
 import com.intepy.bancapp.repositories.UsuarioRepository;
 
 @Service
@@ -28,11 +29,13 @@ public class UsuarioService {
     }
 
     public Usuario actualizarUsuario(Long id, Usuario usuarioActualizado) {
-        return usuarioRepository.findById(id).map(usuario -> {
-            usuario.setNombre(usuarioActualizado.getNombre());
-            usuario.setEmail(usuarioActualizado.getEmail());
-            return usuarioRepository.save(usuario);
-        }).orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        return usuarioRepository.findById(id)
+                .map(usuario -> {
+                    usuario.setNombre(usuarioActualizado.getNombre());
+                    usuario.setEmail(usuarioActualizado.getEmail());
+                    return usuarioRepository.save(usuario);
+                })
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado con id: " + id));
     }
 
     public void eliminarUsuario(Long id) {
