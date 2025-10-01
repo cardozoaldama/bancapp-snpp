@@ -29,4 +29,9 @@ public class EstadoPrestamo {
     @Getter
     @OneToMany(mappedBy = "estado")
     private List<Prestamo> prestamos;
+
+    public EstadoPrestamo(EstadoPrestamoDescripcion descripcion) {
+        this.descripcion = descripcion;
+    }
+
 }
