@@ -15,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,6 +32,7 @@ public class Servicio {
     @Getter
     @Setter
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "El tipo de servicio es requerido")
     private TipoServicio nombre;
 
     @Getter
