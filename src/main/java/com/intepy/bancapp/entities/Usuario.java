@@ -15,6 +15,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,10 +32,13 @@ public class Usuario {
 
     @Getter
     @Setter
+    @NotBlank(message = "El nombre es requerido")
     private String nombre;
 
     @Getter
     @Setter
+    @Email(message = "Email debe ser válido")
+    @NotBlank(message = "El email es requerido")
     private String email;
 
     @Getter
