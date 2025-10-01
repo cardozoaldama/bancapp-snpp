@@ -21,6 +21,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,10 +39,13 @@ public class Cuenta {
 
     @Getter
     @Setter
+    @NotBlank(message = "El número de cuenta es requerido")
     private String numeroCuenta;
 
     @Getter
     @Setter
+    @NotNull(message = "El saldo es requerido")
+    @Min(value = 0, message = "El saldo no puede ser negativo")
     private Double saldo = 0.0;
 
     @Getter
