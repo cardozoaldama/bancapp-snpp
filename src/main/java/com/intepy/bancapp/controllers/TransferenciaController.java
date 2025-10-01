@@ -1,5 +1,6 @@
 package com.intepy.bancapp.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,18 +39,18 @@ public class TransferenciaController {
     }
 
     @PostMapping
-    public Transferencia crearTransferencia(@Valid @RequestBody Transferencia transferencia) {
-        return transferenciaService.guardarTransferencia(transferencia);
+    public ResponseEntity<Transferencia> crearTransferencia(@Valid @RequestBody Transferencia transferencia) {
+        Transferencia transferenciaCreada = transferenciaService.guardarTransferencia(transferencia);
+        return ResponseEntity
+                .created(URI.create("/api/transferencias/" + transferenciaCreada.getId()))
+                .body(transferenciaCreada);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Transferencia> actualizarTransferencia(@PathVariable Long id,
             @Valid @RequestBody Transferencia transferencia) {
-        try {
-            return ResponseEntity.ok(transferenciaService.actualizarTransferencia(id, transferencia));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Transferencia transferenciaActualizada = transferenciaService.actualizarTransferencia(id, transferencia);
+        return ResponseEntity.ok(transferenciaActualizada);
     }
 
     @DeleteMapping("/{id}")
