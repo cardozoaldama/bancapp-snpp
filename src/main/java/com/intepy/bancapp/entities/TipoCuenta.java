@@ -35,4 +35,12 @@ public class TipoCuenta {
         this.nombre = nombre;
     }
 
+    public void addCuenta(Cuenta cuenta) {
+        cuentas.add(cuenta);
+    }
+
+    public void removeCuenta(Cuenta cuenta) {
+        cuentas.remove(cuenta);
+    }
+
 }
