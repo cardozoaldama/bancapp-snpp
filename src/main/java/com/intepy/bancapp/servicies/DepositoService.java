@@ -11,6 +11,8 @@ import com.intepy.bancapp.entities.Deposito;
 import com.intepy.bancapp.repositories.CuentaRepository;
 import com.intepy.bancapp.repositories.DepositoRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class DepositoService {
 
@@ -28,6 +30,7 @@ public class DepositoService {
         return depositoRepository.findById(id);
     }
 
+    @Transactional
     public Deposito guardarDeposito(Deposito deposito) {
         // Actualizar el saldo de la cuenta
         Cuenta cuenta = deposito.getCuenta();
@@ -35,10 +38,11 @@ public class DepositoService {
             cuenta.setSaldo(cuenta.getSaldo() + deposito.getMonto());
             cuentaRepository.save(cuenta);
         }
-        
+
         return depositoRepository.save(deposito);
     }
 
+    @Transactional
     public Deposito actualizarDeposito(Long id, Deposito depositoActualizado) {
         return depositoRepository.findById(id)
                 .map(deposito -> {
@@ -52,7 +56,7 @@ public class DepositoService {
                             cuentaRepository.save(cuenta);
                         }
                     }
-                    
+
                     deposito.setMonto(depositoActualizado.getMonto());
                     deposito.setCuenta(depositoActualizado.getCuenta());
                     return depositoRepository.save(deposito);
@@ -60,6 +64,7 @@ public class DepositoService {
                 .orElseThrow(() -> new RuntimeException("Depósito no encontrado"));
     }
 
+    @Transactional
     public void eliminarDeposito(Long id) {
         Optional<Deposito> depositoOpt = depositoRepository.findById(id);
         if (depositoOpt.isPresent()) {
