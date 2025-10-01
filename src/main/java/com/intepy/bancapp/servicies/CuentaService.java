@@ -30,8 +30,9 @@ public class CuentaService {
     public Cuenta actualizarCuenta(Long id, Cuenta cuentaActualizada) {
         return cuentaRepository.findById(id)
                 .map(cuenta -> {
-                    cuenta.setNumeroCuenta(cuentaActualizada.getNumeroCuenta());
+                    cuenta.setNumero(cuentaActualizada.getNumero());
                     cuenta.setSaldo(cuentaActualizada.getSaldo());
+                    cuenta.setTipoCuenta(cuentaActualizada.getTipoCuenta());
                     return cuentaRepository.save(cuenta);
                 })
                 .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
