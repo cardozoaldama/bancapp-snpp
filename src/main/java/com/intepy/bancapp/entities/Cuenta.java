@@ -60,11 +60,11 @@ public class Cuenta {
     private List<Deposito> depositos = new ArrayList<>();
 
     @Getter
-    @OneToMany(mappedBy = "cuentaOrigen", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cuentaOrigen", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private List<Transferencia> transferenciasOrigen = new ArrayList<>();
 
     @Getter
-    @OneToMany(mappedBy = "cuentaDestino", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cuentaDestino", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private List<Transferencia> transferenciasDestino = new ArrayList<>();
 
     @Getter
