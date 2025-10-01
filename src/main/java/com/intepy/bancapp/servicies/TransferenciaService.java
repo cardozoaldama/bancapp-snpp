@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.intepy.bancapp.entities.Cuenta;
 import com.intepy.bancapp.entities.Transferencia;
+import com.intepy.bancapp.exceptions.InsufficientBalanceException;
+import com.intepy.bancapp.exceptions.InvalidTransferException;
 import com.intepy.bancapp.repositories.CuentaRepository;
 import com.intepy.bancapp.repositories.TransferenciaRepository;
 
@@ -37,17 +39,18 @@ public class TransferenciaService {
 
         // Validar que las cuentas existan
         if (cuentaOrigen == null || cuentaDestino == null) {
-            throw new RuntimeException("Las cuentas de origen y destino son requeridas");
+            throw new InvalidTransferException("Las cuentas de origen y destino son requeridas");
         }
 
         // Validar que la cuenta origen tenga saldo suficiente
         if (cuentaOrigen.getSaldo() < monto) {
-            throw new RuntimeException("Saldo insuficiente en la cuenta origen");
+            throw new InsufficientBalanceException(
+                    "Saldo insuficiente en la cuenta origen. Saldo actual: " + cuentaOrigen.getSaldo());
         }
 
         // Validar que no sea la misma cuenta
         if (cuentaOrigen.getId().equals(cuentaDestino.getId())) {
-            throw new RuntimeException("La cuenta origen y destino no pueden ser la misma");
+            throw new InvalidTransferException("La cuenta origen y destino no pueden ser la misma");
         }
 
         // Realizar la transferencia
@@ -109,7 +112,7 @@ public class TransferenciaService {
         Optional<Transferencia> transferenciaOpt = transferenciaRepository.findById(id);
         if (transferenciaOpt.isPresent()) {
             Transferencia transferencia = transferenciaOpt.get();
-            
+
             // Revertir la transferencia
             Cuenta cuentaOrigen = transferencia.getCuentaOrigen();
             Cuenta cuentaDestino = transferencia.getCuentaDestino();
@@ -118,12 +121,12 @@ public class TransferenciaService {
             if (cuentaOrigen != null && cuentaDestino != null) {
                 cuentaOrigen.setSaldo(cuentaOrigen.getSaldo() + monto);
                 cuentaDestino.setSaldo(cuentaDestino.getSaldo() - monto);
-                
+
                 cuentaRepository.save(cuentaOrigen);
                 cuentaRepository.save(cuentaDestino);
             }
         }
-        
+
         transferenciaRepository.deleteById(id);
     }
 }
