@@ -34,11 +34,11 @@ public class EstadoPrestamo {
         this.descripcion = descripcion;
     }
 
-    void addPrestamo(Prestamo prestamo) {
+    public void addPrestamo(Prestamo prestamo) {
         prestamos.add(prestamo);
     }
 
-    void removePrestamo(Prestamo prestamo) {
+    public void removePrestamo(Prestamo prestamo) {
         prestamos.remove(prestamo);
     }
 

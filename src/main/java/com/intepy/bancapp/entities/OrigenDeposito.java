@@ -32,11 +32,11 @@ public class OrigenDeposito {
         this.descripcion = descripcion;
     }
 
-    void addDeposito(Deposito deposito) {
+    public void addDeposito(Deposito deposito) {
         depositos.add(deposito);
     }
 
-    void removeDeposito(Deposito deposito) {
+    public void removeDeposito(Deposito deposito) {
         depositos.remove(deposito);
     }
 }
