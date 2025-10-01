@@ -38,11 +38,11 @@ public class Usuario {
 
     @Getter
     @JsonManagedReference("usuario-cuentas")
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private List<Cuenta> cuentas = new ArrayList<>();
 
     @Getter
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JsonManagedReference("usuario-prestamos")
     private List<Prestamo> prestamos = new ArrayList<>();
 
