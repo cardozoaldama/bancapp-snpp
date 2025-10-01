@@ -89,4 +89,12 @@ public class Cuenta {
     public void removeTransferenciasDestino(Transferencia transferencia) {
         transferenciasDestino.remove(transferencia);
     }
+
+    public void addPago(PagoServicio pagoServicio) {
+        pagos.add(pagoServicio);
+    }
+
+    public void removePago(PagoServicio pagoServicio) {
+        pagos.remove(pagoServicio);
+    }
 }
