@@ -34,4 +34,11 @@ public class Deposito {
     @ManyToOne
     @JoinColumn(name = "origen_id")
     private OrigenDeposito origen;
+
+    public Deposito(Double monto, Cuenta cuenta, OrigenDeposito origen) {
+        this.monto = monto;
+        this.cuenta = cuenta;
+        this.origen = origen;
+    }
+
 }
