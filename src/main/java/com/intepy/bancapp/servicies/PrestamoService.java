@@ -9,12 +9,9 @@ import org.springframework.stereotype.Service;
 import com.intepy.bancapp.entities.Prestamo;
 import com.intepy.bancapp.repositories.PrestamoRepository;
 
-import lombok.Getter;
-
 @Service
 public class PrestamoService {
 
-    @Getter
     @Autowired
     private PrestamoRepository prestamoRepository;
 
