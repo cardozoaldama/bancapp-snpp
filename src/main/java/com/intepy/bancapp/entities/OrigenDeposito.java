@@ -27,4 +27,9 @@ public class OrigenDeposito {
     @Getter
     @OneToMany(mappedBy = "origen")
     private List<Deposito> depositos;
+
+    public OrigenDeposito(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
 }
