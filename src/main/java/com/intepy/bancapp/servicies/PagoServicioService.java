@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.intepy.bancapp.entities.Cuenta;
 import com.intepy.bancapp.entities.PagoServicio;
+import com.intepy.bancapp.exceptions.InsufficientBalanceException;
+import com.intepy.bancapp.exceptions.ValidationException;
 import com.intepy.bancapp.repositories.CuentaRepository;
 import com.intepy.bancapp.repositories.PagoServicioRepository;
 
@@ -36,17 +38,18 @@ public class PagoServicioService {
 
         // Validar que la cuenta exista
         if (cuenta == null) {
-            throw new RuntimeException("La cuenta es requerida para realizar el pago");
+            throw new ValidationException("La cuenta es requerida para realizar el pago");
         }
 
         // Validar que el servicio exista
         if (pago.getServicio() == null) {
-            throw new RuntimeException("El servicio es requerido para realizar el pago");
+            throw new ValidationException("El servicio es requerido para realizar el pago");
         }
 
         // Validar que la cuenta tenga saldo suficiente
         if (cuenta.getSaldo() < monto) {
-            throw new RuntimeException("Saldo insuficiente para realizar el pago del servicio");
+            throw new InsufficientBalanceException(
+                    "Saldo insuficiente para realizar el pago del servicio. Saldo actual: " + cuenta.getSaldo());
         }
 
         // Descontar el monto de la cuenta
@@ -97,7 +100,7 @@ public class PagoServicioService {
         Optional<PagoServicio> pagoOpt = pagoServicioRepository.findById(id);
         if (pagoOpt.isPresent()) {
             PagoServicio pago = pagoOpt.get();
-            
+
             // Revertir el pago - devolver el dinero a la cuenta
             Cuenta cuenta = pago.getCuenta();
             if (cuenta != null) {
@@ -105,7 +108,7 @@ public class PagoServicioService {
                 cuentaRepository.save(cuenta);
             }
         }
-        
+
         pagoServicioRepository.deleteById(id);
     }
 }
