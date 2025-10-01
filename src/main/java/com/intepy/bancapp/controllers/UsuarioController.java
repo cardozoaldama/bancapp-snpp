@@ -1,5 +1,6 @@
 package com.intepy.bancapp.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,11 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario crearUsuario(@Valid @RequestBody Usuario usuario) {
-        return usuarioService.guardarUsuario(usuario);
+    public ResponseEntity<Usuario> crearUsuario(@Valid @RequestBody Usuario usuario) {
+        Usuario usuarioCreado = usuarioService.guardarUsuario(usuario);
+        return ResponseEntity
+                .created(URI.create("/api/usuarios/" + usuarioCreado.getId()))
+                .body(usuarioCreado);
     }
 
     @PutMapping("/{id}")
