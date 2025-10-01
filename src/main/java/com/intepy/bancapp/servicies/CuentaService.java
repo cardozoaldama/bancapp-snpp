@@ -9,12 +9,9 @@ import org.springframework.stereotype.Service;
 import com.intepy.bancapp.entities.Cuenta;
 import com.intepy.bancapp.repositories.CuentaRepository;
 
-import lombok.Getter;
-
 @Service
 public class CuentaService {
 
-    @Getter
     @Autowired
     private CuentaRepository cuentaRepository;
 
