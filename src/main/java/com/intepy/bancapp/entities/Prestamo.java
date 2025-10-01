@@ -6,8 +6,11 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.intepy.bancapp.entities.enums.EstadoPrestamoDescripcion;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -39,9 +42,8 @@ public class Prestamo {
 
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "estado_id")
-    private EstadoPrestamo estado;
+    @Enumerated(EnumType.STRING)
+    private EstadoPrestamoDescripcion estado;
 
     @CreatedDate
     private LocalDateTime createdAt;
@@ -49,7 +51,7 @@ public class Prestamo {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public Prestamo(Double monto, Usuario usuario, EstadoPrestamo estado) {
+    public Prestamo(Double monto, Usuario usuario, EstadoPrestamoDescripcion estado) {
         this.monto = monto;
         this.usuario = usuario;
         this.estado = estado;
