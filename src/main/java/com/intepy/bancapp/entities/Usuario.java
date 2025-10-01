@@ -38,6 +38,11 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Prestamo> prestamos = new ArrayList<>();
 
+    public Usuario(String nombre, String email) {
+        this.nombre = nombre;
+        this.email = email;
+    }
+
     public void addCuenta(Cuenta cuenta) {
         cuentas.add(cuenta);
     }
