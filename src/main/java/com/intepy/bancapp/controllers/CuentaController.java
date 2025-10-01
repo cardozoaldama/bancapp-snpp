@@ -1,5 +1,6 @@
 package com.intepy.bancapp.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,11 @@ public class CuentaController {
     }
 
     @PostMapping
-    public Cuenta crearCuenta(@Valid @RequestBody Cuenta cuenta) {
-        return cuentaService.guardarCuenta(cuenta);
+    public ResponseEntity<Cuenta> crearCuenta(@Valid @RequestBody Cuenta cuenta) {
+        Cuenta cuentaCreada = cuentaService.guardarCuenta(cuenta);
+        return ResponseEntity
+                .created(URI.create("/api/cuentas/" + cuentaCreada.getId()))
+                .body(cuentaCreada);
     }
 
     @PutMapping("/{id}")
