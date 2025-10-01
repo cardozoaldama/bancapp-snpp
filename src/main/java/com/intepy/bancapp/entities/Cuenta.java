@@ -55,4 +55,12 @@ public class Cuenta {
     @Getter
     @OneToMany(mappedBy = "cuentaDestino", cascade = CascadeType.ALL)
     private List<Transferencia> transferenciasDestino = new ArrayList<>();
+
+    public Cuenta(String numeroCuenta, Double saldo, Usuario usuario, TipoCuenta tipoCuenta) {
+        this.numeroCuenta = numeroCuenta;
+        this.saldo = saldo;
+        this.usuario = usuario;
+        this.tipoCuenta = tipoCuenta;
+    }
+
 }
