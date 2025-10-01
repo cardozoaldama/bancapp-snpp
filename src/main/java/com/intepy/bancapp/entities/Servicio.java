@@ -29,4 +29,9 @@ public class Servicio {
     @Getter
     @OneToMany(mappedBy = "servicio")
     private List<PagoServicio> pagos;
+
+    public Servicio(TipoServicio nombre) {
+        this.nombre = nombre;
+    }
+
 }
