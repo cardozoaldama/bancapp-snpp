@@ -67,14 +67,16 @@ public class Cuenta {
     @OneToMany(mappedBy = "cuentaDestino", cascade = CascadeType.ALL)
     private List<Transferencia> transferenciasDestino = new ArrayList<>();
 
+    @Getter
+    @JsonManagedReference("cuenta-pagos")
+    @OneToMany(mappedBy = "cuenta", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    private List<PagoServicio> pagos = new ArrayList<>();
+
     @CreatedDate
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "cuenta")
-    private List<PagoServicio> pagos = new ArrayList<>();
 
     public Cuenta(String numeroCuenta, Double saldo, Usuario usuario, TipoCuentaBasica tipoCuenta) {
         this.numeroCuenta = numeroCuenta;
