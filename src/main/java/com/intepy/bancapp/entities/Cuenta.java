@@ -71,4 +71,12 @@ public class Cuenta {
         depositos.remove(deposito);
     }
 
+    public void addCuentaOrigen(Transferencia transferencia) {
+        transferenciasOrigen.add(transferencia);
+    }
+
+    public void removeCuentaOrigen(Transferencia transferencia) {
+        transferenciasOrigen.remove(transferencia);
+    }
+
 }
