@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.intepy.bancapp.entities.enums.TipoCuentaBasica;
 
 import jakarta.persistence.CascadeType;
@@ -54,7 +55,8 @@ public class Cuenta {
     private TipoCuentaBasica tipoCuenta;
 
     @Getter
-    @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL)
+    @JsonManagedReference("cuenta-depositos")
+    @OneToMany(mappedBy = "cuenta", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private List<Deposito> depositos = new ArrayList<>();
 
     @Getter
