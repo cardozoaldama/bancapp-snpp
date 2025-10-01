@@ -30,4 +30,9 @@ public class TipoCuenta {
     @Getter
     @OneToMany(mappedBy = "tipoCuenta", cascade = CascadeType.ALL)
     private List<Cuenta> cuentas;
+
+    public TipoCuenta(TipoCuentaBasica nombre) {
+        this.nombre = nombre;
+    }
+
 }
