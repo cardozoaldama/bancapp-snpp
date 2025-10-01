@@ -26,7 +26,7 @@ public class Cuenta {
 
     @Getter
     @Setter
-    private String numero;
+    private String numeroCuenta;
 
     @Getter
     @Setter

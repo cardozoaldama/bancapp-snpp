@@ -33,7 +33,7 @@ public class CuentaService {
     public Cuenta actualizarCuenta(Long id, Cuenta cuentaActualizada) {
         return cuentaRepository.findById(id)
                 .map(cuenta -> {
-                    cuenta.setNumero(cuentaActualizada.getNumero());
+                    cuenta.setNumeroCuenta(cuentaActualizada.getNumeroCuenta());
                     cuenta.setSaldo(cuentaActualizada.getSaldo());
                     return cuentaRepository.save(cuenta);
                 })
