@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.intepy.bancapp.entities.Deposito;
 import com.intepy.bancapp.servicies.DepositoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/depositos")
 public class DepositoController {
@@ -36,12 +38,12 @@ public class DepositoController {
     }
 
     @PostMapping
-    public Deposito crearDeposito(@RequestBody Deposito deposito) {
+    public Deposito crearDeposito(@Valid @RequestBody Deposito deposito) {
         return depositoService.guardarDeposito(deposito);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Deposito> actualizarDeposito(@PathVariable Long id, @RequestBody Deposito deposito) {
+    public ResponseEntity<Deposito> actualizarDeposito(@PathVariable Long id, @Valid @RequestBody Deposito deposito) {
         try {
             return ResponseEntity.ok(depositoService.actualizarDeposito(id, deposito));
         } catch (RuntimeException e) {

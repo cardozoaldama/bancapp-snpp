@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.intepy.bancapp.entities.Cuenta;
 import com.intepy.bancapp.servicies.CuentaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/cuentas")
 public class CuentaController {
@@ -36,12 +38,12 @@ public class CuentaController {
     }
 
     @PostMapping
-    public Cuenta crearCuenta(@RequestBody Cuenta cuenta) {
+    public Cuenta crearCuenta(@Valid @RequestBody Cuenta cuenta) {
         return cuentaService.guardarCuenta(cuenta);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cuenta> actualizarCuenta(@PathVariable Long id, @RequestBody Cuenta cuenta) {
+    public ResponseEntity<Cuenta> actualizarCuenta(@PathVariable Long id, @Valid @RequestBody Cuenta cuenta) {
         try {
             return ResponseEntity.ok(cuentaService.actualizarCuenta(id, cuenta));
         } catch (RuntimeException e) {

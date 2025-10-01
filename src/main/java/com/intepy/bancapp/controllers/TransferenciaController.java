@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.intepy.bancapp.entities.Transferencia;
 import com.intepy.bancapp.servicies.TransferenciaService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/transferencias")
 public class TransferenciaController {
@@ -36,12 +38,13 @@ public class TransferenciaController {
     }
 
     @PostMapping
-    public Transferencia crearTransferencia(@RequestBody Transferencia transferencia) {
+    public Transferencia crearTransferencia(@Valid @RequestBody Transferencia transferencia) {
         return transferenciaService.guardarTransferencia(transferencia);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Transferencia> actualizarTransferencia(@PathVariable Long id, @RequestBody Transferencia transferencia) {
+    public ResponseEntity<Transferencia> actualizarTransferencia(@PathVariable Long id,
+            @Valid @RequestBody Transferencia transferencia) {
         try {
             return ResponseEntity.ok(transferenciaService.actualizarTransferencia(id, transferencia));
         } catch (RuntimeException e) {

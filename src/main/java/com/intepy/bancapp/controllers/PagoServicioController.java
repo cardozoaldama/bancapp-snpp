@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.intepy.bancapp.entities.PagoServicio;
 import com.intepy.bancapp.servicies.PagoServicioService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/pagos")
 public class PagoServicioController {
@@ -36,12 +38,12 @@ public class PagoServicioController {
     }
 
     @PostMapping
-    public PagoServicio crearPago(@RequestBody PagoServicio pago) {
+    public PagoServicio crearPago(@Valid @RequestBody PagoServicio pago) {
         return pagoServicioService.guardarPago(pago);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PagoServicio> actualizarPago(@PathVariable Long id, @RequestBody PagoServicio pago) {
+    public ResponseEntity<PagoServicio> actualizarPago(@PathVariable Long id, @Valid @RequestBody PagoServicio pago) {
         try {
             return ResponseEntity.ok(pagoServicioService.actualizarPago(id, pago));
         } catch (RuntimeException e) {

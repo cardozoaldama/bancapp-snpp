@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.intepy.bancapp.entities.Usuario;
 import com.intepy.bancapp.servicies.UsuarioService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
@@ -36,12 +38,12 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public Usuario crearUsuario(@RequestBody Usuario usuario) {
+    public Usuario crearUsuario(@Valid @RequestBody Usuario usuario) {
         return usuarioService.guardarUsuario(usuario);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+    public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @Valid @RequestBody Usuario usuario) {
         try {
             return ResponseEntity.ok(usuarioService.actualizarUsuario(id, usuario));
         } catch (RuntimeException e) {

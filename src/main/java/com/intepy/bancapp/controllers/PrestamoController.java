@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.intepy.bancapp.entities.Prestamo;
 import com.intepy.bancapp.servicies.PrestamoService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/prestamos")
 public class PrestamoController {
@@ -36,12 +38,12 @@ public class PrestamoController {
     }
 
     @PostMapping
-    public Prestamo crearPrestamo(@RequestBody Prestamo prestamo) {
+    public Prestamo crearPrestamo(@Valid @RequestBody Prestamo prestamo) {
         return prestamoService.guardarPrestamo(prestamo);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Prestamo> actualizarPrestamo(@PathVariable Long id, @RequestBody Prestamo prestamo) {
+    public ResponseEntity<Prestamo> actualizarPrestamo(@PathVariable Long id, @Valid @RequestBody Prestamo prestamo) {
         try {
             return ResponseEntity.ok(prestamoService.actualizarPrestamo(id, prestamo));
         } catch (RuntimeException e) {
