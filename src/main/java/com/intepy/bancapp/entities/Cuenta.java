@@ -32,7 +32,6 @@ import lombok.Setter;
 @Entity
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-
 public class Cuenta {
 
     @Getter
