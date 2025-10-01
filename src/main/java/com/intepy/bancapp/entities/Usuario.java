@@ -56,10 +56,14 @@ public class Usuario {
 
     @CreatedDate
     @Column(nullable = false, updatable = false) // No puede ser null, no se puede actualizar
+    @Getter
+    @Setter
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     @Column(nullable = false)  // No puede ser null, pero sí se actualiza
+    @Getter
+    @Setter
     private LocalDateTime updatedAt;
 
     public Usuario(String nombre, String email) {
