@@ -34,4 +34,11 @@ public class Prestamo {
     @ManyToOne
     @JoinColumn(name = "estado_id")
     private EstadoPrestamo estado;
+
+    public Prestamo(Double monto, Usuario usuario, EstadoPrestamo estado) {
+        this.monto = monto;
+        this.usuario = usuario;
+        this.estado = estado;
+    }
+
 }
