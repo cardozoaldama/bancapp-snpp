@@ -40,7 +40,7 @@ public class Cuenta {
     @Getter
     @Setter
     @NotBlank(message = "El número de cuenta es requerido")
-    private String numeroCuenta;
+    private String numero;
 
     @Getter
     @Setter
@@ -84,8 +84,8 @@ public class Cuenta {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    public Cuenta(String numeroCuenta, Double saldo, Usuario usuario, TipoCuentaBasica tipoCuenta) {
-        this.numeroCuenta = numeroCuenta;
+    public Cuenta(String numero, Double saldo, Usuario usuario, TipoCuentaBasica tipoCuenta) {
+        this.numero = numero;
         this.saldo = saldo;
         this.usuario = usuario;
         this.tipoCuenta = tipoCuenta;
