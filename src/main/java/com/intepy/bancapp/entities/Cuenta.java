@@ -34,7 +34,7 @@ public class Cuenta {
 
     @Getter
     @Setter
-    private Double saldo;
+    private Double saldo = 0.0;
 
     @Getter
     @Setter
