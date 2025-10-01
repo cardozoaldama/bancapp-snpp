@@ -1,5 +1,6 @@
 package com.intepy.bancapp.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,11 @@ public class DepositoController {
     }
 
     @PostMapping
-    public Deposito crearDeposito(@Valid @RequestBody Deposito deposito) {
-        return depositoService.guardarDeposito(deposito);
+    public ResponseEntity<Deposito> crearDeposito(@Valid @RequestBody Deposito deposito) {
+        Deposito depositoCreado = depositoService.guardarDeposito(deposito);
+        return ResponseEntity
+                .created(URI.create("/api/depositos/" + depositoCreado.getId()))
+                .body(depositoCreado);
     }
 
     @PutMapping("/{id}")
