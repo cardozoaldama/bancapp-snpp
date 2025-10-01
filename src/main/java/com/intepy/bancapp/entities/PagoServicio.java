@@ -34,4 +34,11 @@ public class PagoServicio {
     @ManyToOne
     @JoinColumn(name = "servicio_id")
     private Servicio servicio;
+
+    public PagoServicio(Double monto, Cuenta cuenta, Servicio servicio) {
+        this.monto = monto;
+        this.cuenta = cuenta;
+        this.servicio = servicio;
+    }
+
 }
