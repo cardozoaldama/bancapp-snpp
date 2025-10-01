@@ -1,7 +1,7 @@
 package com.intepy.bancapp.entities.enums;
 
 public enum EstadoPrestamoDescripcion {
-    APROVADO,
+    APROBADO,
     PENDIENTE,
     RECHAZADO
 }
