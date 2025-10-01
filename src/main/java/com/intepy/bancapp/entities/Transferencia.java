@@ -6,6 +6,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -50,9 +51,11 @@ public class Transferencia {
     private Cuenta cuentaDestino;
 
     @CreatedDate
+    @Column(nullable = false, updatable = false) // No puede ser null, no se puede actualizar
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Column(nullable = false) // No puede ser null, pero sí se actualiza
     private LocalDateTime updatedAt;
 
     public Transferencia(Double monto, Cuenta cuentaOrigen, Cuenta cuentaDestino) {

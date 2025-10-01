@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
@@ -50,9 +51,11 @@ public class Deposito {
     private String descripcionOrigen;
 
     @CreatedDate
+    @Column(nullable = false, updatable = false) // No puede ser null, no se puede actualizar
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Column(nullable = false) // No puede ser null, pero sí se actualiza
     private LocalDateTime updatedAt;
 
     public Deposito(Double monto, Cuenta cuenta, String descripcionOrigen) {

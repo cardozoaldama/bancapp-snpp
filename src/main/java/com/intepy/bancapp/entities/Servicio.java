@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import com.intepy.bancapp.entities.enums.TipoServicio;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
@@ -44,9 +45,11 @@ public class Servicio {
     private List<PagoServicio> pagos = new ArrayList<>();
 
     @CreatedDate
+    @Column(nullable = false, updatable = false) // No puede ser null, no se puede actualizar
     private LocalDateTime createdAt;
 
     @LastModifiedDate
+    @Column(nullable = false) // No puede ser null, pero sí se actualiza
     private LocalDateTime updatedAt;
 
     public Servicio(TipoServicio nombre) {
