@@ -1,5 +1,6 @@
 package com.intepy.bancapp.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +39,17 @@ public class PrestamoController {
     }
 
     @PostMapping
-    public Prestamo crearPrestamo(@Valid @RequestBody Prestamo prestamo) {
-        return prestamoService.guardarPrestamo(prestamo);
+    public ResponseEntity<Prestamo> crearPrestamo(@Valid @RequestBody Prestamo prestamo) {
+        Prestamo prestamoCreado = prestamoService.guardarPrestamo(prestamo);
+        return ResponseEntity
+                .created(URI.create("/api/prestamos/" + prestamoCreado.getId()))
+                .body(prestamoCreado);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Prestamo> actualizarPrestamo(@PathVariable Long id, @Valid @RequestBody Prestamo prestamo) {
-        try {
-            return ResponseEntity.ok(prestamoService.actualizarPrestamo(id, prestamo));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Prestamo prestamoActualizado = prestamoService.actualizarPrestamo(id, prestamo);
+        return ResponseEntity.ok(prestamoActualizado);
     }
 
     @DeleteMapping("/{id}")
