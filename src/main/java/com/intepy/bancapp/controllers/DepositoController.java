@@ -48,11 +48,8 @@ public class DepositoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Deposito> actualizarDeposito(@PathVariable Long id, @Valid @RequestBody Deposito deposito) {
-        try {
-            return ResponseEntity.ok(depositoService.actualizarDeposito(id, deposito));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Deposito depositoActualizado = depositoService.actualizarDeposito(id, deposito);
+        return ResponseEntity.ok(depositoActualizado);
     }
 
     @DeleteMapping("/{id}")
