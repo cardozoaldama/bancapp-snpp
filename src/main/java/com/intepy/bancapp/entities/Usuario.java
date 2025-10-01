@@ -9,12 +9,10 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -43,11 +41,9 @@ public class Usuario {
 
     @Getter
     @JsonManagedReference("usuario-cuentas")
-    @OneToMany(mappedBy = "usuario", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     private List<Cuenta> cuentas = new ArrayList<>();
 
     @Getter
-    @OneToMany(mappedBy = "usuario", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JsonManagedReference("usuario-prestamos")
     private List<Prestamo> prestamos = new ArrayList<>();
 
