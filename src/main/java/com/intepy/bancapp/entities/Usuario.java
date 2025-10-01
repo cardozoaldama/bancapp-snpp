@@ -13,6 +13,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -41,10 +42,12 @@ public class Usuario {
 
     @Getter
     @JsonManagedReference("usuario-cuentas")
+    @OneToMany(mappedBy = "usuario")
     private List<Cuenta> cuentas = new ArrayList<>();
 
     @Getter
     @JsonManagedReference("usuario-prestamos")
+    @OneToMany(mappedBy = "usuario")
     private List<Prestamo> prestamos = new ArrayList<>();
 
     @CreatedDate

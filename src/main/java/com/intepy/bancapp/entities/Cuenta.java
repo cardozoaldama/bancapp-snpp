@@ -19,6 +19,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -60,16 +61,20 @@ public class Cuenta {
 
     @Getter
     @JsonManagedReference("cuenta-depositos")
+    @OneToMany(mappedBy = "cuenta")
     private List<Deposito> depositos = new ArrayList<>();
 
     @Getter
+    @OneToMany(mappedBy = "cuentaOrigen")
     private List<Transferencia> transferenciasOrigen = new ArrayList<>();
 
     @Getter
+    @OneToMany(mappedBy = "cuentaDestino")
     private List<Transferencia> transferenciasDestino = new ArrayList<>();
 
     @Getter
     @JsonManagedReference("cuenta-pagos")
+    @OneToMany(mappedBy = "cuenta")
     private List<PagoServicio> pagos = new ArrayList<>();
 
     @CreatedDate
