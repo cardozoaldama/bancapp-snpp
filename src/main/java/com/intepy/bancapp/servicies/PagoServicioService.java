@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.intepy.bancapp.entities.Cuenta;
 import com.intepy.bancapp.entities.PagoServicio;
+import com.intepy.bancapp.exceptions.EntityNotFoundException;
 import com.intepy.bancapp.exceptions.InsufficientBalanceException;
 import com.intepy.bancapp.exceptions.ValidationException;
 import com.intepy.bancapp.repositories.CuentaRepository;
@@ -79,7 +80,7 @@ public class PagoServicioService {
 
                     // Validar saldo suficiente
                     if (nuevaCuenta.getSaldo() < nuevoMonto) {
-                        throw new RuntimeException("Saldo insuficiente para el nuevo monto del pago");
+                        throw new InsufficientBalanceException("Saldo insuficiente para el nuevo monto del pago");
                     }
 
                     nuevaCuenta.setSaldo(nuevaCuenta.getSaldo() - nuevoMonto);
@@ -92,7 +93,7 @@ public class PagoServicioService {
 
                     return pagoServicioRepository.save(pago);
                 })
-                .orElseThrow(() -> new RuntimeException("Pago no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Pago no encontrado con id: " + id));
     }
 
     @Transactional
