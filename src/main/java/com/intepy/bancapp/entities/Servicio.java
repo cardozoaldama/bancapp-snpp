@@ -9,6 +9,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import com.intepy.bancapp.entities.enums.TipoServicio;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,6 +30,7 @@ public class Servicio {
 
     @Getter
     @Setter
+    @Enumerated(EnumType.STRING)
     private TipoServicio nombre;
 
     @Getter
