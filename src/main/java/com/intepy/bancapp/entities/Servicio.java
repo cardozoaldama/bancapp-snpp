@@ -1,6 +1,7 @@
 package com.intepy.bancapp.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -37,7 +38,7 @@ public class Servicio {
 
     @Getter
     @OneToMany(mappedBy = "servicio")
-    private List<PagoServicio> pagos;
+    private List<PagoServicio> pagos = new ArrayList<>();
 
     @CreatedDate
     private LocalDateTime createdAt;
