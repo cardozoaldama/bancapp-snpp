@@ -1,5 +1,6 @@
 package com.intepy.bancapp.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,17 +39,17 @@ public class PagoServicioController {
     }
 
     @PostMapping
-    public PagoServicio crearPago(@Valid @RequestBody PagoServicio pago) {
-        return pagoServicioService.guardarPago(pago);
+    public ResponseEntity<PagoServicio> crearPago(@Valid @RequestBody PagoServicio pago) {
+        PagoServicio pagoCreado = pagoServicioService.guardarPago(pago);
+        return ResponseEntity
+                .created(URI.create("/api/pagos/" + pagoCreado.getId()))
+                .body(pagoCreado);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<PagoServicio> actualizarPago(@PathVariable Long id, @Valid @RequestBody PagoServicio pago) {
-        try {
-            return ResponseEntity.ok(pagoServicioService.actualizarPago(id, pago));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        PagoServicio pagoActualizado = pagoServicioService.actualizarPago(id, pago);
+        return ResponseEntity.ok(pagoActualizado);
     }
 
     @DeleteMapping("/{id}")
