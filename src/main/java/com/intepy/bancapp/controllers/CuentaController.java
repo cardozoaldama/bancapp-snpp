@@ -48,11 +48,8 @@ public class CuentaController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Cuenta> actualizarCuenta(@PathVariable Long id, @Valid @RequestBody Cuenta cuenta) {
-        try {
-            return ResponseEntity.ok(cuentaService.actualizarCuenta(id, cuenta));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Cuenta cuentaActualizada = cuentaService.actualizarCuenta(id, cuenta);
+        return ResponseEntity.ok(cuentaActualizada);
     }
 
     @DeleteMapping("/{id}")
