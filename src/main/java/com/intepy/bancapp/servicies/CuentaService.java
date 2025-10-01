@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.intepy.bancapp.entities.Cuenta;
+import com.intepy.bancapp.exceptions.EntityNotFoundException;
 import com.intepy.bancapp.repositories.CuentaRepository;
 
 @Service
@@ -32,10 +33,12 @@ public class CuentaService {
                 .map(cuenta -> {
                     cuenta.setNumero(cuentaActualizada.getNumero());
                     cuenta.setSaldo(cuentaActualizada.getSaldo());
-                    cuenta.setTipoCuenta(cuentaActualizada.getTipoCuenta());
+                    if (cuentaActualizada.getTipoCuenta() != null) {
+                        cuenta.setTipoCuenta(cuentaActualizada.getTipoCuenta());
+                    }
                     return cuentaRepository.save(cuenta);
                 })
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Cuenta no encontrada con id: " + id));
     }
 
     public void eliminarCuenta(Long id) {
