@@ -48,18 +48,12 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> actualizarUsuario(@PathVariable Long id, @Valid @RequestBody Usuario usuario) {
-        try {
-            return ResponseEntity.ok(usuarioService.actualizarUsuario(id, usuario));
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+        Usuario usuarioActualizado = usuarioService.actualizarUsuario(id, usuario);
+        return ResponseEntity.ok(usuarioActualizado);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarUsuario(@PathVariable Long id) {
-        if (usuarioService.obtenerUsuarioPorId(id).isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
         usuarioService.eliminarUsuario(id);
         return ResponseEntity.noContent().build();
     }
