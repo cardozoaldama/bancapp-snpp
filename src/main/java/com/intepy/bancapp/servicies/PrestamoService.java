@@ -7,13 +7,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.intepy.bancapp.entities.Prestamo;
+import com.intepy.bancapp.entities.Usuario;
+import com.intepy.bancapp.exceptions.EntityNotFoundException;
 import com.intepy.bancapp.repositories.PrestamoRepository;
+import com.intepy.bancapp.repositories.UsuarioRepository;
 
 @Service
 public class PrestamoService {
 
     @Autowired
     private PrestamoRepository prestamoRepository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public List<Prestamo> listarPrestamos() {
         return prestamoRepository.findAll();
@@ -24,6 +30,15 @@ public class PrestamoService {
     }
 
     public Prestamo guardarPrestamo(Prestamo prestamo) {
+        // CORRECCIÓN: Si el préstamo tiene un usuario, buscar el usuario completo
+        if (prestamo.getUsuario() != null && prestamo.getUsuario().getId() != null) {
+            Long usuarioId = prestamo.getUsuario().getId();
+            Usuario usuario = usuarioRepository.findById(usuarioId)
+                    .orElseThrow(() -> new EntityNotFoundException(
+                            "Usuario no encontrado con id: " + usuarioId));
+            prestamo.setUsuario(usuario);
+        }
+
         return prestamoRepository.save(prestamo);
     }
 
@@ -32,9 +47,20 @@ public class PrestamoService {
                 .map(prestamo -> {
                     prestamo.setMonto(prestamoActualizado.getMonto());
                     prestamo.setEstado(prestamoActualizado.getEstado());
+
+                    // CORRECCIÓN: Si se actualiza el usuario, buscar el usuario completo
+                    if (prestamoActualizado.getUsuario() != null &&
+                            prestamoActualizado.getUsuario().getId() != null) {
+                        Long usuarioId = prestamoActualizado.getUsuario().getId();
+                        Usuario usuario = usuarioRepository.findById(usuarioId)
+                                .orElseThrow(() -> new EntityNotFoundException(
+                                        "Usuario no encontrado con id: " + usuarioId));
+                        prestamo.setUsuario(usuario);
+                    }
+
                     return prestamoRepository.save(prestamo);
                 })
-                .orElseThrow(() -> new RuntimeException("Préstamo no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Préstamo no encontrado con id: " + id));
     }
 
     public void eliminarPrestamo(Long id) {
