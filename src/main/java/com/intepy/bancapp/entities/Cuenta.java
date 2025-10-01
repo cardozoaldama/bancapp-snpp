@@ -79,4 +79,11 @@ public class Cuenta {
         transferenciasOrigen.remove(transferencia);
     }
 
+    public void addTransferenciasDestino(Transferencia transferencia) {
+        transferenciasDestino.add(transferencia);
+    }
+
+    public void removeTransferenciasDestino(Transferencia transferencia) {
+        transferenciasDestino.remove(transferencia);
+    }
 }
