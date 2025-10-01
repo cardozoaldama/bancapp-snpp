@@ -34,14 +34,27 @@ public class TransferenciaService {
 
     @Transactional
     public Transferencia guardarTransferencia(Transferencia transferencia) {
-        Cuenta cuentaOrigen = transferencia.getCuentaOrigen();
-        Cuenta cuentaDestino = transferencia.getCuentaDestino();
-        Double monto = transferencia.getMonto();
-
-        // Validar que las cuentas existan
-        if (cuentaOrigen == null || cuentaDestino == null) {
-            throw new InvalidTransferException("Las cuentas de origen y destino son requeridas");
+        // CORRECCIÓN: Buscar las cuentas completas de la base de datos
+        if (transferencia.getCuentaOrigen() == null || transferencia.getCuentaOrigen().getId() == null) {
+            throw new InvalidTransferException("La cuenta de origen es requerida");
         }
+
+        if (transferencia.getCuentaDestino() == null || transferencia.getCuentaDestino().getId() == null) {
+            throw new InvalidTransferException("La cuenta de destino es requerida");
+        }
+
+        Long cuentaOrigenId = transferencia.getCuentaOrigen().getId();
+        Long cuentaDestinoId = transferencia.getCuentaDestino().getId();
+
+        Cuenta cuentaOrigen = cuentaRepository.findById(cuentaOrigenId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Cuenta origen no encontrada con id: " + cuentaOrigenId));
+
+        Cuenta cuentaDestino = cuentaRepository.findById(cuentaDestinoId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Cuenta destino no encontrada con id: " + cuentaDestinoId));
+
+        Double monto = transferencia.getMonto();
 
         // Validar que la cuenta origen tenga saldo suficiente
         if (cuentaOrigen.getSaldo() < monto) {
@@ -61,6 +74,10 @@ public class TransferenciaService {
         // Guardar las cuentas actualizadas
         cuentaRepository.save(cuentaOrigen);
         cuentaRepository.save(cuentaDestino);
+
+        // Asociar las cuentas completas a la transferencia
+        transferencia.setCuentaOrigen(cuentaOrigen);
+        transferencia.setCuentaDestino(cuentaDestino);
 
         // Guardar la transferencia
         return transferenciaRepository.save(transferencia);
@@ -82,9 +99,18 @@ public class TransferenciaService {
                         cuentaRepository.save(cuentaDestinoAnterior);
                     }
 
-                    // Aplicar la nueva transferencia
-                    Cuenta nuevaCuentaOrigen = transferenciaActualizada.getCuentaOrigen();
-                    Cuenta nuevaCuentaDestino = transferenciaActualizada.getCuentaDestino();
+                    // CORRECCIÓN: Buscar las nuevas cuentas completas
+                    Long nuevaCuentaOrigenId = transferenciaActualizada.getCuentaOrigen().getId();
+                    Long nuevaCuentaDestinoId = transferenciaActualizada.getCuentaDestino().getId();
+
+                    Cuenta nuevaCuentaOrigen = cuentaRepository.findById(nuevaCuentaOrigenId)
+                            .orElseThrow(() -> new EntityNotFoundException(
+                                    "Cuenta origen no encontrada con id: " + nuevaCuentaOrigenId));
+
+                    Cuenta nuevaCuentaDestino = cuentaRepository.findById(nuevaCuentaDestinoId)
+                            .orElseThrow(() -> new EntityNotFoundException(
+                                    "Cuenta destino no encontrada con id: " + nuevaCuentaDestinoId));
+
                     Double nuevoMonto = transferenciaActualizada.getMonto();
 
                     // Validar saldo suficiente
