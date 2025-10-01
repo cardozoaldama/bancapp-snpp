@@ -1,7 +1,11 @@
 package com.intepy.bancapp.entities;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -55,6 +59,12 @@ public class Cuenta {
     @Getter
     @OneToMany(mappedBy = "cuentaDestino", cascade = CascadeType.ALL)
     private List<Transferencia> transferenciasDestino = new ArrayList<>();
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "cuenta")
     private List<PagoServicio> pagos = new ArrayList<>();

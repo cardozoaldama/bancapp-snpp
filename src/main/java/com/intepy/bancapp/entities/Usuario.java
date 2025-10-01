@@ -1,7 +1,11 @@
 package com.intepy.bancapp.entities;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -37,6 +41,12 @@ public class Usuario {
     @Getter
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Prestamo> prestamos = new ArrayList<>();
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     public Usuario(String nombre, String email) {
         this.nombre = nombre;

@@ -1,6 +1,10 @@
 package com.intepy.bancapp.entities;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import com.intepy.bancapp.entities.enums.TipoCuentaBasica;
 
@@ -30,6 +34,12 @@ public class TipoCuenta {
     @Getter
     @OneToMany(mappedBy = "tipoCuenta", cascade = CascadeType.ALL)
     private List<Cuenta> cuentas;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     public TipoCuenta(TipoCuentaBasica nombre) {
         this.nombre = nombre;

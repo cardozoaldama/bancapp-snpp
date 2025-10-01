@@ -1,6 +1,10 @@
 package com.intepy.bancapp.entities;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import com.intepy.bancapp.entities.enums.EstadoPrestamoDescripcion;
 
@@ -29,6 +33,12 @@ public class EstadoPrestamo {
     @Getter
     @OneToMany(mappedBy = "estado")
     private List<Prestamo> prestamos;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     public EstadoPrestamo(EstadoPrestamoDescripcion descripcion) {
         this.descripcion = descripcion;

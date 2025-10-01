@@ -1,6 +1,10 @@
 package com.intepy.bancapp.entities;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +31,12 @@ public class OrigenDeposito {
     @Getter
     @OneToMany(mappedBy = "origen")
     private List<Deposito> depositos;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     public OrigenDeposito(String descripcion) {
         this.descripcion = descripcion;

@@ -1,5 +1,10 @@
 package com.intepy.bancapp.entities;
 
+import java.time.LocalDateTime;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +39,12 @@ public class PagoServicio {
     @ManyToOne
     @JoinColumn(name = "servicio_id")
     private Servicio servicio;
+
+    @CreatedDate
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
 
     public PagoServicio(Double monto, Cuenta cuenta, Servicio servicio) {
         this.monto = monto;
