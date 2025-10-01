@@ -8,6 +8,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.intepy.bancapp.entities.enums.TipoServicio;
 
 import jakarta.persistence.Column;
@@ -41,23 +42,33 @@ public class Servicio {
     private TipoServicio nombre;
 
     @Getter
+    @Setter
+    private String descripcion;
+
+    @Getter
+    @JsonManagedReference("servicio-pagos")
     @OneToMany(mappedBy = "servicio")
     private List<PagoServicio> pagos = new ArrayList<>();
 
     @CreatedDate
-    @Column(nullable = false, updatable = false) // No puede ser null, no se puede actualizar
+    @Column(nullable = false, updatable = false)
     @Getter
     @Setter
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(nullable = false) // No puede ser null, pero sí se actualiza
+    @Column(nullable = false)
     @Getter
     @Setter
     private LocalDateTime updatedAt;
 
     public Servicio(TipoServicio nombre) {
         this.nombre = nombre;
+    }
+
+    public Servicio(TipoServicio nombre, String descripcion) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
     }
 
     public void addPago(PagoServicio pago) {
