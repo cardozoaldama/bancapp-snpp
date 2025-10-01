@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.intepy.bancapp.entities.Cuenta;
 import com.intepy.bancapp.entities.Transferencia;
+import com.intepy.bancapp.exceptions.EntityNotFoundException;
 import com.intepy.bancapp.exceptions.InsufficientBalanceException;
 import com.intepy.bancapp.exceptions.InvalidTransferException;
 import com.intepy.bancapp.repositories.CuentaRepository;
@@ -88,7 +89,7 @@ public class TransferenciaService {
 
                     // Validar saldo suficiente
                     if (nuevaCuentaOrigen.getSaldo() < nuevoMonto) {
-                        throw new RuntimeException("Saldo insuficiente en la cuenta origen");
+                        throw new InsufficientBalanceException("Saldo insuficiente en la cuenta origen");
                     }
 
                     nuevaCuentaOrigen.setSaldo(nuevaCuentaOrigen.getSaldo() - nuevoMonto);
@@ -104,7 +105,7 @@ public class TransferenciaService {
 
                     return transferenciaRepository.save(transferencia);
                 })
-                .orElseThrow(() -> new RuntimeException("Transferencia no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Transferencia no encontrada con id: " + id));
     }
 
     @Transactional
