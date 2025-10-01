@@ -8,9 +8,12 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.intepy.bancapp.entities.enums.TipoCuentaBasica;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,9 +50,8 @@ public class Cuenta {
 
     @Getter
     @Setter
-    @ManyToOne
-    @JoinColumn(name = "tipo_cuenta_id")
-    private TipoCuenta tipoCuenta;
+    @Enumerated(EnumType.STRING)
+    private TipoCuentaBasica tipoCuenta;
 
     @Getter
     @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL)
@@ -72,7 +74,7 @@ public class Cuenta {
     @OneToMany(mappedBy = "cuenta")
     private List<PagoServicio> pagos = new ArrayList<>();
 
-    public Cuenta(String numeroCuenta, Double saldo, Usuario usuario, TipoCuenta tipoCuenta) {
+    public Cuenta(String numeroCuenta, Double saldo, Usuario usuario, TipoCuentaBasica tipoCuenta) {
         this.numeroCuenta = numeroCuenta;
         this.saldo = saldo;
         this.usuario = usuario;
