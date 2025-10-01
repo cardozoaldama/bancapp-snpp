@@ -9,12 +9,9 @@ import org.springframework.stereotype.Service;
 import com.intepy.bancapp.entities.Usuario;
 import com.intepy.bancapp.repositories.UsuarioRepository;
 
-import lombok.Getter;
-
 @Service
 public class UsuarioService {
 
-    @Getter
     @Autowired
     private UsuarioRepository usuarioRepository;
 
