@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,11 +37,13 @@ public class Usuario {
     private String email;
 
     @Getter
+    @JsonManagedReference("usuario-cuentas")
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     private List<Cuenta> cuentas = new ArrayList<>();
 
     @Getter
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @JsonManagedReference("usuario-prestamos")
     private List<Prestamo> prestamos = new ArrayList<>();
 
     @CreatedDate
