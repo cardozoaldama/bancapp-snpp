@@ -63,4 +63,12 @@ public class Cuenta {
         this.tipoCuenta = tipoCuenta;
     }
 
+    public void addDeposito(Deposito deposito) {
+        depositos.add(deposito);
+    }
+
+    public void removeDeposito(Deposito deposito) {
+        depositos.remove(deposito);
+    }
+
 }
