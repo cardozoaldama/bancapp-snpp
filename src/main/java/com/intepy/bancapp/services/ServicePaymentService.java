@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.intepy.bancapp.entities.Account;
 import com.intepy.bancapp.entities.ServicePayment;
-import com.intepy.bancapp.entities.Service;
 import com.intepy.bancapp.exceptions.EntityNotFoundException;
 import com.intepy.bancapp.exceptions.InsufficientBalanceException;
 import com.intepy.bancapp.exceptions.ValidationException;
