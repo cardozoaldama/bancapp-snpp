@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.intepy.bancapp.dto.TransferRequestDTO;
 import com.intepy.bancapp.entities.Account;
 import com.intepy.bancapp.entities.Transfer;
 import com.intepy.bancapp.exceptions.EntityNotFoundException;
@@ -30,6 +31,43 @@ public class TransferService {
 
     public Optional<Transfer> getTransferById(Long id) {
         return transferRepository.findById(id);
+    }
+
+    @Transactional
+    public Transfer createTransferFromDTO(TransferRequestDTO dto) {
+        // Find accounts by account number
+        Account sourceAccount = accountRepository.findByNumber(dto.getSourceAccountNumber())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Source account not found with number: " + dto.getSourceAccountNumber()));
+
+        Account destinationAccount = accountRepository.findByNumber(dto.getDestinationAccountNumber())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Destination account not found with number: " + dto.getDestinationAccountNumber()));
+
+        Double amount = dto.getAmount();
+
+        // Validate that the source account has sufficient balance
+        if (sourceAccount.getBalance() < amount) {
+            throw new InsufficientBalanceException(
+                    "Insufficient balance in source account. Current balance: " + sourceAccount.getBalance());
+        }
+
+        // Validate that it's not the same account
+        if (sourceAccount.getId().equals(destinationAccount.getId())) {
+            throw new InvalidTransferException("Source and destination account cannot be the same");
+        }
+
+        // Perform the transfer
+        sourceAccount.setBalance(sourceAccount.getBalance() - amount);
+        destinationAccount.setBalance(destinationAccount.getBalance() + amount);
+
+        // Save the updated accounts
+        accountRepository.save(sourceAccount);
+        accountRepository.save(destinationAccount);
+
+        // Create and save the transfer
+        Transfer transfer = new Transfer(amount, sourceAccount, destinationAccount);
+        return transferRepository.save(transfer);
     }
 
     @Transactional
